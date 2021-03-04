@@ -301,9 +301,8 @@ On NYU Classes, submit a link to your GitHub repository. The repository
 should be **private**, and you should add the instructor/TA's GitHub
 account as a contributor to give them access for grading.
 
-For this section, your instructor is: Kevin Gallagher.
-
-For this section, your TA is: Julio Nunez.
+For this section, your instructor is: Kevin Gallagher, GitHub ID `kcg295`.
+For this section, your TA is Evan Richter, GitHub ID `evanrichter`.
 
 The repository should contain:
 
