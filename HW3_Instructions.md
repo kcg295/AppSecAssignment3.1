@@ -53,11 +53,11 @@ https://www.docker.com/get-started
 
 To install Kubectl, please see the following Website.
 
-https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
 To install Minikube, please see the following Website.
 
-https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-minikube/
+https://minikube.sigs.k8s.io/docs/start/
 
 Like in the previous assignments we will be using Git and Github for submission,
 so please ensure you still have Git installed. Though we will not be checking
