@@ -15,7 +15,7 @@ application, then deploy it in a way that ensures availability and security.
 What they delivered, as usual, falls quite short of the mark.
 
 Like last time, what Shoddycorp's Cut-Rate Contracting provided was a deployment
-that *almost* works. They containerized the application, the database, and an
+that *almost* works. They containerized the application, the database, and a
 Nginx reverse proxy all in Docker. They then created Kubernetes yaml files to
 run these containers in a Kubernetes cluster, and configured them to talk to
 each other as needed. They even began adding some event monitoring for a
@@ -41,25 +41,57 @@ Kubernetes is a fairly complicated beast. To help you get oriented, we've create
 
 ## Part 0: Setting up Your Environment
 
-In order to complete this assignment you will need Docker, minikube, and 
-kubectl. Installing these is not simple, and is highly platform dependent.
-Rather than detail how to install these software on different platforms, this
-document instead links to the relevant information on how to install these tools
-at their official sites.
+This assignment requires Docker, minikube, and kubectl. The supported
+operating for this course is **Ubuntu 20.04.3 LTS**. You can use [this script](nyu-appsec-a3-ubuntu20043lts-setup.sh)
+to automatically install and configure the required software on the 
+supported operating system. After saving the file, simply execute the following
+command as a standard system user (root will not work) that has sudo privileges:
 
-To install Docker, please see the following Website and select Docker Desktop.
+```
+bash nyu-appsec-a3-ubuntu20043lts-setup.sh
+```
+Assuming your standard user is not already in a group named docker, the script
+will install docker and add your standard user to the docker group. Then, reboot your system and run the command one more time.
+ ```
+bash nyu-appsec-a3-ubuntu20043lts-setup.sh
+```
+Now that docker is installed and your user is in the docker group, it will install
+the remaining software required for the assignment. A successful outcome should wrap
+up with output that looks like this:
+```
+###################################################################################
+[*] Checking on status of pods and services...
+###################################################################################
+[*] Waiting 60 seconds for pods to transition from "Pending" to "Running" status...
+###################################################################################
+NAME                                         READY   STATUS              RESTARTS   AGE
+assignment3-django-deploy-5db4f954dc-r4sjw   1/1     Running             0          60s
+mysql-container-6c6466b64c-swnz6             1/1     Running             0          60s
+proxy-6dcd56d44d-cp962                       1/1     Running             0          60s
+NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+assignment3-django-service   NodePort    10.111.71.37     <none>        8000:32004/TCP   61s
+kubernetes                   ClusterIP   10.96.0.1        <none>        443/TCP          144s
+mysql-service                ClusterIP   10.108.177.108   <none>        3306/TCP         61s
+proxy-service                NodePort    10.105.11.142    <none>        8080:32290/TCP   61s
+####################################################################
+[*] All done! You are ready to begin working on AppSec Assignment 3.
+####################################################################
+```
 
-https://www.docker.com/get-started
+**If the script is successful, you can skip over Part 0.2** after reviewing Part 0.1. If not, reach out to the instructor
+and/or course assistants for assistance.
 
-To install Kubectl, please see the following Website.
+Operating systems other than the one supported for this course are not recommended;
+however, if you often find yourself voiding warranties, and you enjoy operating with limited
+assistance, you may refer to the following guidance to prepare your environment:
 
-https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/
+To install Docker, please see the following Website and select [Docker Desktop](https://www.docker.com/get-started)
 
-To install Minikube, please see the following Website.
+To install Kubectl, please see the [following Website](https://kubernetes.io/docs/tasks/tools/).
 
-https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-minikube/
+To install Minikube, please see the [following Website](https://minikube.sigs.k8s.io/docs/start).
 
-Like in the previous assignments we will be using Git and Github for submission,
+Like in the previous assignments we will be using Git and GitHub for submission,
 so please ensure you still have Git installed. Though we will not be checking
 for them, remember that it is in your best interest to continue to follow git
 best practices.
@@ -151,7 +183,7 @@ to move on to the next part.
 ## Part 1: Securing Secrets.
 
 Unfortunately there are many values that are supposed to be secret floating
-around in the source code and in the yaml files. Typically we do not want this.
+around in the source code and in the yaml files. Typically, we do not want this.
 Secret values should be protected so that we can move the source code to GitHub
 and put the docker images on Dockerhub and not compromise any secrets. In
 addition to keeping secrets secret, this method also allows for changing secrets
@@ -173,9 +205,6 @@ For this portion of the assignment, you should submit:
 
 Finally, rebuild your Docker container for the Django application, and then
 update your pods using the kubectl apply commands specified earlier.
-
-When you are finished with this section, please mark your part 1 
-submission by tagging the desired commit with the tag "part_1_complete"
 
 ## Part 2: Applying Migrations
 
@@ -206,9 +235,6 @@ Django and one to seed the Database. You will need to submit:
 * Any code you wrote to perform database seeding.
 * A jobs.txt file that describes what you did in this section.
 
-When you finish this part of the assignment, please mark your part 2 
-submission by tagging the desired commit with the tag "part_2_complete"
-
 ## Part 3: Monitoring with Prometheus
 
 It seems the DevOps employee at Shoddycorp's Cut-Rate Contracting decided to add
@@ -225,7 +251,7 @@ Prometheus service to collect the information that's being exposed on the site.
 In this section of the assignment you will be fixing this situation by removing
 problematic monitoring done using Prometheus' python client, and expanding the
 reasonable monitoring with a few more metrics. Then you will create a Prometheus
-pod and service for Kubernetes so it can monitor your application.
+pod and service for Kubernetes, so it can monitor your application.
 
 Specifically, in this part you must:
 
@@ -240,7 +266,7 @@ file.
 ### Part 3.2: Expand reasonable monitoring.
 
 There are things we may want to monitor using Prometheus. In this part of the
-assignment you should add a Prometheus counter that counts all of the times we 
+assignment you should add a Prometheus counter that counts all the times we 
 purposely return a 404 message in views.py. These lines are caused by Database 
 errors, so you should name this counter database_error_return_404.
 
@@ -252,16 +278,11 @@ file.
 All of this data is pointless if it is not being collected. In this section you
 should add Prometheus to your Kubernetes cluster and use it to automatically
 monitor the metrics from your Web application. Information about how to add
-Prometheus to Kubernetes can be found at the following links.
+Prometheus to Kubernetes can be [found here](https://prometheus.io/docs/introduction/overview/).
 
-https://prometheus.io/docs/introduction/overview/
-
-For this section you will submit all of the yaml files that you needed to run
+For this section you will submit all the yaml files that you needed to run
 Prometheus, as well as a writeup called Prometheus.txt describing the steps you
 took to get it running.
-
-When you finish this part of the assignment, please mark your part 3 
-submission by tagging the desired commit with the tag "part_3_complete"
 
 Hints:
 
@@ -297,9 +318,15 @@ Part 3 is worth 30 points:
 
 ## What to Submit
 
-On NYU Classes, submit a link to your GitHub repository. The repository
+On Gradescope, submit your GitHub repository. The repository
 should be **private**, and you should add the instructor/TA's GitHub
-account as a contributor to give them access for grading.
+account as a contributor to give them access for grading. Please include the link 
+to your GitHub repository in your writeup.
+
+When you are finished with a part, please mark your part complete by using 
+a [git annotated tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) with the message 
+"part_1_complete" when Part 1 is completed, "part_2_complete" when Part 2 is completed, etc. 
+This makes finding the repository state when a part is completed easier for partial credit grading.
 
 Please see your course page to see who your grader is. Please only add
 your grader the day you turn your assignment in.
@@ -309,19 +336,19 @@ The repository should contain:
 * Part 1
   * Your yaml files using Kubernetes secrets.
   * All files you changed from the GiftcardSite/ directory.
-  * A writeup called secrets.txt.
-  * A commit with the above mentioned files tagged as part_1_complete.
+  * In your writeup, explain your work with how you completed this part
+  * A git annotated tag with the mentioned files with the message "part_1_complete".
 * Part 2
   * Yaml files that create the Kubernetes jobs.
   * Modified and/or new Dockerfiles.
   * All code you wrote to seed the database.
-  * A writeup called jobs.txt.
-  * A commit with these files and code tagged as part_2_complete.
+  * In your writeup, explain your work with how you completed this part
+  * A git annotated tag with these files and code with the message "part_2_complete".
 * Part 3
   * A modified GiftcardSite/LegacySite/views.py file.
   * Your yaml files for running Prometheus.
-  * A writeup called Prometheus.txt.
-  * A commit with these files and code tagged as part_3_complete.
+  * In your writeup, explain your work with how you completed this part
+  * A git annotated tag with these files and code with the message "part_3_complete".
 
 ## Concluding Remarks
 
@@ -331,18 +358,18 @@ things that are still lacking.
 
 One of the benefits of using Kubernetes is the ability to create replicas that
 are load balanced to avoid overwhelming one instance of the application. The
-same can be done with other micro-services such as the database, though this
+same can be done with other microservices such as the database, though this
 would require database syncing across the difference database instances. These
 solutions do not currently exist in this version of the assignment.
 
 For more experience working with cloud security and deployment, consider taking
-this one step further and replicating these micro-services. Attempt to load
+this one step further and replicating these microservices. Attempt to load
 balance over many replicas, and syncing databases. Try using Prometheus to
-gather more metrics from all of your different micro-services. Try adding logging
+gather more metrics from all of your different microservices. Try adding logging
 and other useful tools.
 
 Though these attempts will not be graded, and should not be submitted as part of
 the assignment, they should help you learn a lot about how using cloud
 deployment helps you preserve the availability of your service (and the
-micro-services that comprise it) and how good monitoring and logging can help you
+microservices that comprise it) and how good monitoring and logging can help you
 spot errors in the application before they become serious issues.
