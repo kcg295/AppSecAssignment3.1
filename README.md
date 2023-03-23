@@ -326,7 +326,7 @@ to your GitHub repository in your writeup.
 When you are finished with a part, please mark your part complete by using 
 a [git annotated tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) with the message 
 "part_1_complete" when Part 1 is completed, "part_2_complete" when Part 2 is completed, etc. 
-This makes finding the state when a part is completed for easier partial credit grading easier.
+This makes finding the repository state when a part is completed easier for partial credit grading.
 
 Please see your course page to see who your grader is. Please only add
 your grader the day you turn your assignment in.
