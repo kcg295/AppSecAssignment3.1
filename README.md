@@ -282,7 +282,10 @@ Prometheus to Kubernetes can be [found here](https://prometheus.io/docs/introduc
 
 For this section you will submit all the yaml files that you needed to run
 Prometheus, as well as a writeup called Prometheus.txt describing the steps you
-took to get it running.
+took to get it running. In the case that you did not use any yaml files, but simply
+ran commands, your write-up should detail the commands you ran to install and configure
+Prometheus to perform the proper logging. In this case, you should also submit the final configmap
+using the commands supplied in the hints below.
 
 Hints:
 
