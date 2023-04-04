@@ -339,19 +339,20 @@ The repository should contain:
 * Part 1
   * Your yaml files using Kubernetes secrets.
   * All files you changed from the GiftcardSite/ directory.
-  * In your writeup, explain your work with how you completed this part
-  * A git annotated tag with the mentioned files with the message "part_1_complete".
+  * In your writeup, explain how you added and managed the k8s secrets.
+  * A git commit tagged as "part_1_complete".
 * Part 2
   * Yaml files that create the Kubernetes jobs.
-  * Modified and/or new Dockerfiles.
-  * All code you wrote to seed the database.
-  * In your writeup, explain your work with how you completed this part
-  * A git annotated tag with these files and code with the message "part_2_complete".
+  * Modified and/or new Dockerfiles (if applicable).
+  * All code you wrote to seed the database (if applicable).
+  * In your writeup, explain your approaches to the k8s jobs.
+  * A git commit tagged as "part_2_complete".
 * Part 3
   * A modified GiftcardSite/LegacySite/views.py file.
-  * Your yaml files for running Prometheus.
-  * In your writeup, explain your work with how you completed this part
-  * A git annotated tag with these files and code with the message "part_3_complete".
+  * Your yaml files with the Prometheus configuration.
+  * In your writeup, explain how you installed and configured Prometheus.
+  * In your writeup, explain why you removed the code you removed, and why you added the monitoring you added.
+  * A git commit tagged as "part_3_complete".
 
 ## Concluding Remarks
 
