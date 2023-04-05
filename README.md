@@ -198,7 +198,7 @@ they end up as environment variables).
 For this portion of the assignment, you should submit:
 
 1. All kubernetes yaml files modified to use secrets
-2. All changes necessary to the Web application (limited to views.py and
+2. All changes necessary to the Web application (limited to
    settings.py as mentioned above) needed to use the passed secrets.
 3. A file, called secrets.txt, which demonstrates how you added the secrets.
    This must include all commands used, etc.
